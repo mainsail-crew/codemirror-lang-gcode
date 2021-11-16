@@ -1,6 +1,8 @@
 {
   "name": "@codemirror/lang-gcode",
   "version": "0.1.0",
+  "licenses": "MIT",
+  "repository": "https://github.com/mainsail-crew/codemirror-lang-gcode",
   "description": "gcode language support for CodeMirror",
   "scripts": {
     "test": "mocha test/test.js",
