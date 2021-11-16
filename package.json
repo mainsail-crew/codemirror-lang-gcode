@@ -1,5 +1,5 @@
 {
-  "name": "@codemirror/lang-gcode",
+  "name": "@mainsail-crew/lang-gcode",
   "version": "0.1.0",
   "licenses": "MIT",
   "repository": "https://github.com/mainsail-crew/codemirror-lang-gcode",
