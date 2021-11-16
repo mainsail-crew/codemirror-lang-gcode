@@ -2,29 +2,33 @@ import {parser} from "./syntax.grammar"
 import {LRLanguage, LanguageSupport, indentNodeProp, foldNodeProp, foldInside, delimitedIndent} from "@codemirror/language"
 import {styleTags, tags as t} from "@codemirror/highlight"
 
-export const EXAMPLELanguage = LRLanguage.define({
+export const GcodeLanguage = LRLanguage.define({
   parser: parser.configure({
     props: [
-      indentNodeProp.add({
-        Application: delimitedIndent({closing: ")", align: false})
-      }),
       foldNodeProp.add({
-        Application: foldInside
+        Object: foldInside
       }),
       styleTags({
-        Identifier: t.variableName,
-        Boolean: t.bool,
-        String: t.string,
+        "StartMovement StartConfig": t.namespace,
+        Extrusion: t.atom,
+        Coordinates: t.className,
+        Feed: t.string,
         LineComment: t.lineComment,
-        "( )": t.paren
+        "START_CURRENT_OBJECT END_CURRENT_OBJECT": t.macroName
       })
     ]
   }),
   languageData: {
-    commentTokens: {line: ";"}
+    commentTokens: {
+      line: ';',
+      block: {
+        open: "; thumbnail begin",
+        close: "; thumbnail end"
+      }
+    }
   }
 })
 
-export function EXAMPLE() {
-  return new LanguageSupport(EXAMPLELanguage)
+export function Gcode() {
+  return new LanguageSupport(GcodeLanguage)
 }

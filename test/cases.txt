@@ -1,41 +1,55 @@
-# Booleans
-
-#t
-#f
-
-==>
-
-Program(Boolean, Boolean)
-
 # Identifiers
 
-one
-Two_Three
+G0
+G1
 
 ==>
 
-Program(Identifier, Identifier)
+Gcode(Identifier, Identifier)
 
-# Strings
+# Movement
 
-"hello"
-"one\"\\two"
-
-==>
-
-Program(String, String)
-
-# Applications
-
-(begin
-  (when #t
-    (print (concat "hello" " " "world")))
-  (print "DONE"))
+G0 X123 Y123 Z123
 
 ==>
 
-Program(Application(
-  Identifier,
-  Application(Identifier, Boolean, Application(
-    Identifier, Application(Identifier, String, String, String)))
-  Application(Identifier, String)))
+Gcode(Identifier, Movement, Movement, Movement)
+
+# Extrusion
+
+G0 E123
+G0 E123.123
+
+==>
+
+Gcode(Identifier, Extrusion, Identifier, Extrusion)
+
+# Speed
+
+G0 F16000
+G0 F16000.000
+
+==>
+
+Gcode(Identifier, Speed, Identifier, Speed)
+
+# Setup
+
+M1
+M12
+M123
+
+==>
+
+Gcode(Setup, Setup, Setup)
+
+# LineComment
+
+; LineComment
+;LineComment
+
+G0 ;LineComment
+
+==>
+
+Gcode(LineComment, LineComment, Identifier, LineComment)

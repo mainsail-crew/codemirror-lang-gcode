@@ -1,26 +1,41 @@
-@top Program { expression* }
+@top Gcode { lines* }
 
-@skip { space | LineComment }
+@skip { LineComment }
 
-expression {
-  Identifier |
-  String |
-  Boolean |
-  Application { "(" expression* ")" }
+lines {
+    Movement |
+    Object { "START_CURRENT_OBJECT" lines+ "END_CURRENT_OBJECT" }
+}
+
+Movement {
+    StartMovement ( Coordinates | Feed | Extrusion)* |
+    StartConfig Extrusion*
 }
 
 @tokens {
-  Identifier { $[a-zA-Z_\-0-9]+ }
+  number { "-"?(std.digit+ | std.digit* "." std.digit+) }
 
-  String { '"' (!["\\] | "\\" _)* '"' }
+  StartMovement { "G" std.digit+ }
 
-  Boolean { "#t" | "#f" }
+  StartConfig { "M" std.digit+ }
+
+  Coordinates { $[XYZ] number }
+
+  Extrusion { $[TSE] number }
+
+  Feed { "F" number }
 
   LineComment { ";" ![\n]* }
 
   space { $[ \t\n\r]+ }
 
-  "(" ")"
-}
+  char { $[A-Za-z0-9_] }
 
-@detectDelim
+  "START_CURRENT_OBJECT" "END_CURRENT_OBJECT"
+
+  @precedence { StartMovement, char }
+  @precedence { StartConfig, char }
+  @precedence { Coordinates, char }
+  @precedence { Extrusion, char }
+  @precedence { Feed, char }
+}
