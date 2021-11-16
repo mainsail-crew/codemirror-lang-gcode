@@ -29,13 +29,5 @@ Movement {
 
   space { $[ \t\n\r]+ }
 
-  char { $[A-Za-z0-9_] }
-
   "START_CURRENT_OBJECT" "END_CURRENT_OBJECT"
-
-  @precedence { StartMovement, char }
-  @precedence { StartConfig, char }
-  @precedence { Coordinates, char }
-  @precedence { Extrusion, char }
-  @precedence { Feed, char }
 }
